@@ -1,214 +1,94 @@
-import React from 'react';
-import './App.css';
-import Header from './components/Header/Header.js';
-import SearchRecord from './components/Search/Search.js';
-import Table from './components/Table/Table.js';
-import Pagination from './components/Pagination/Pagination.js';
-import Form from './components/Form/Form.js'
-import Trash from './components/Trash/Trash.js'
+import "./App.css";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+import React, { useState, useEffect } from "react";
+import Header from "./components/Header/Header.js";
+import SearchRecord from "./components/Search/Search.js";
+import Table from "./components/Table/Table.js";
+import Pagination from "./components/Pagination/Pagination.js";
+import Form from "./components/Form/Form.js";
+import Trash from "./components/Trash/Trash.js";
 
-export default class App extends React.Component {
-  constructor(props) {
-    super(props);
+export default function App() {
+  const [formData, setForm] = useState({
+    id: "",
+    name: "",
+    dateofbirth: "",
+    email: "",
+    tel: "",
+  });
 
-    this.state = {
-      id: new Date().getTime(),
-      name: '',
-      dateofbirth: '',
-      email: '',
-      tel: '',
-      records: [],
-      objectRenderedRecords: [],
-      modeEdit: false,
-      pageCurrent: 0,
-      recordPerPage: 5,
-      overflow: 'content'
-    }
+  const [records, setRecords] = useState([]);
+  // TODO: criar paginação com hooks
+  const [perPage, setPerPage] = useState(5);
+  const [pageCurrent, setPageCurrent] = useState(0);
+  const [overflow, setOverflow] = useState("content");
+  const [modeEdit, setModeEdit] = useState(false);
 
-    this.getValueInput = this.getValueInput.bind(this);
-    this.addRecord = this.addRecord.bind(this);
-    this.deleteRecord = this.deleteRecord.bind(this);
-    this.deleteAllRecords = this.deleteAllRecords.bind(this);
-    this.editRecord = this.editRecord.bind(this);
-    this.addEditedRecord = this.addEditedRecord.bind(this);
-    this.updatePage = this.updatePage.bind(this);
-    this.updatepageCurrent = this.updatepageCurrent.bind(this);
-    this.recordSought = this.recordSought.bind(this);
-  }
-
-  componentDidMount = () => {
-
-    if (!localStorage.getItem('ObjectRecord')) {
+  useEffect(() => {
+    if (!localStorage.getItem("ObjectRecord")) {
+      setRecords([]);
       return;
     }
+    const ObjectRecord = JSON.parse(localStorage.getItem("ObjectRecord"));
+    setRecords(ObjectRecord);
+  }, []);
 
-    let ObjectRecord = JSON.parse(localStorage.getItem('ObjectRecord'));
-    this.setState({ records: ObjectRecord });
-
-    this.updatepageCurrent(true);
+  function deleteRecord(id) {
+    let updateRecords = records.filter((record) => record.id !== id);
+    setRecords(updateRecords);
+    localStorage.setItem("ObjectRecord", JSON.stringify(updateRecords));
   }
 
-
-  getValueInput = (e) => {
-
-    const { name, value } = e.target;
-    this.setState({ [name]: value });
+  function deleteAllRecords() {
+    localStorage.removeItem("ObjectRecord");
+    setRecords([]);
   }
 
+  function editRecord(recordId) {
+    let ObjectRecord = JSON.parse(localStorage.getItem("ObjectRecord"));
 
-  addRecord = () => {
+    const form = ObjectRecord.filter((record) => recordId === record.id)[0];
 
-    const { id, name, dateofbirth, email, tel, records } = this.state;
-    if (this.state.modeEdit) {
-      this.addEditedRecord();
+    setForm(form);
+  }
 
+  function upinsertRecord(data) {
+    const ObjectRecord = JSON.parse(localStorage.getItem("ObjectRecord"));
+    let upinsert = [];
+
+    if (!data.id.length) {
+      upinsert = [...ObjectRecord, { ...data, id: new Date().getTime() }];
     } else {
-
-      this.setState({ id: new Date().getTime() });
-
-      let updateRecords = [...records, { id, name, dateofbirth, email, tel }];
-
-      this.setState({ records: updateRecords });
-      localStorage.setItem('ObjectRecord', JSON.stringify(updateRecords));
-
-      this.updatepageCurrent(true);
+      const filter = ObjectRecord.filter((i) => +i.id !== +data.id);
+      upinsert = [...filter, { ...data }];
     }
 
-    this.setState({
-      name: '',
-      dateofbirth: '',
-      email: '',
-      tel: ''
+    localStorage.setItem("ObjectRecord", JSON.stringify(upinsert));
+    setRecords(upinsert);
+    setForm({
+      id: "",
+      name: "",
+      dateofbirth: "",
+      email: "",
+      tel: "",
     });
   }
 
-
-  deleteRecord = (id) => {
-
-    let updateRecords = this.state.records.filter(record => record.id !== id);
-    this.setState({ records: updateRecords });
-    this.setState({ objectRenderedRecords: updateRecords });
-    localStorage.setItem('ObjectRecord', JSON.stringify(updateRecords));
-
-    this.updatepageCurrent();
-  }
-
-
-  deleteAllRecords = () => {
-
-    localStorage.removeItem('ObjectRecord');
-    this.setState({ records: [] });
-    this.setState({ objectRenderedRecords: [] });
-    this.setState({ pageCurrent: 0 });
-  }
-
-
-  editRecord = (recordId) => {
-
-    this.setState({ modeEdit: true });
-    let ObjectRecord = JSON.parse(localStorage.getItem('ObjectRecord'));
-
-    ObjectRecord.filter(record => {
-      if (recordId === record.id) {
-        this.setState({
-          id: record.id,
-          name: record.name,
-          dateofbirth: record.dateofbirth,
-          email: record.email,
-          tel: record.tel
-
-        });
-      }
-    });
-  }
-
-
-  addEditedRecord = () => {
-    let ObjectRecord = JSON.parse(localStorage.getItem('ObjectRecord'));
-
-    let { id, name, dateofbirth, email, tel } = this.state;
-    console.log(this.state)
-    ObjectRecord.filter((record, index) => {
-      if (parseInt(record.id) === parseInt(id)) {
-
-        ObjectRecord.splice(index, 1, { id, name, dateofbirth, email, tel });
-        this.setState({ records: ObjectRecord });
-        localStorage.setItem('ObjectRecord', JSON.stringify(ObjectRecord));
-      }
-    });
-
-    this.setState({ name: '', dateofbirth: '', email: '', tel: '' });
-    this.setState({ modeEdit: false });
-  }
-
-
-  updatepageCurrent = (lastPage = false) => {
-    let ObjectRecord = JSON.parse(localStorage.getItem('ObjectRecord'));
-    if (Math.ceil(ObjectRecord.length / this.state.recordPerPage) < this.state.pageCurrent || lastPage) {
-      let pageCurrent = Math.ceil(ObjectRecord.length / this.state.recordPerPage);
-      this.setState({ pageCurrent: pageCurrent })
-      this.updatePage(pageCurrent);
-
-    } else {
-      let pageCurrent = this.state.pageCurrent;
-      this.updatePage(pageCurrent);
-    }
-  }
-
-
-  recordSought = (recordSought) => {
-    this.setState({ objectRenderedRecords: recordSought });
-
-    if (recordSought.length <= 5 || this.state.records.length === recordSought.length) {
-      this.updatePage(this.state.pageCurrent);
-      this.setState({ overflow: 'content' })
-    } else {
-      this.setState({ overflow: 'content overflow-active' })
-    }
-  }
-
-
-  updatePage = (pageCurrent) => {
-
-    this.setState({ pageCurrent: pageCurrent })
-    let end = pageCurrent * this.state.recordPerPage;
-    let start = end - this.state.recordPerPage;
-
-    let ObjectRecord = JSON.parse(localStorage.getItem('ObjectRecord'));
-    let objectRenderedRecords = ObjectRecord.slice(start, end);
-
-    this.setState({ objectRenderedRecords: objectRenderedRecords })
-  }
-
-  render() {
-    return (
-
-      <div className={'container'} style={{ overflowY: 'hidden' }}>
-        <Header />
-        <SearchRecord
-          records={this.state.records}
-          recordSought={this.recordSought}
-        />
-        <Table
-          objectRenderedRecords={this.state.objectRenderedRecords}
-          deleteRecord={this.deleteRecord}
-          editRecord={this.editRecord}
-          overflow={this.state.overflow}
-        />
-        <Pagination
-          state={this.state}
-          updatePage={this.updatePage}
-        />
-        <Form
-          state={this.state}
-          getValueInput={this.getValueInput}
-          addRecord={this.addRecord}
-        />
-        <Trash
-          deleteAllRecords={this.deleteAllRecords}
-        />
-      </div>
-    );
-  }
+  return (
+    <div className="container" style={{ overflowY: "hidden" }}>
+      <Header />
+      <SearchRecord records={records} recordSought={null} />
+      <Table
+        data={records}
+        deleteRecord={deleteRecord}
+        editRecord={editRecord}
+        overflow={overflow}
+      />
+      <Pagination state={null} updatePage={null} />
+      <Form formData={formData} upinsertRecord={upinsertRecord} />
+      <Trash deleteAllRecords={deleteAllRecords} />
+      <ToastContainer />
+    </div>
+  );
 }
-
