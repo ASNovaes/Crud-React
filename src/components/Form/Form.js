@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { toast } from "react-toastify";
 import { Form as UForm } from "@unform/web";
 import editUser from "../../img/edit-user.svg";
@@ -6,12 +6,15 @@ import add from "../../img/icon-add.svg";
 import Input from "./Input";
 import * as Yup from "yup";
 
-export default function Form({ addRecord }) {
+export default function Form({ upinsertRecord, formData }) {
   const formRef = useRef(null);
+
+  useEffect(() => {
+    formRef.current.setData(formData);
+  }, [formData]);
 
   async function handleSubmit(data) {
     try {
-      console.log({ data });
       const schema = Yup.object().shape({
         name: Yup.string()
           .min(2, "Nome deve ter no mínimo 2 caracteres")
@@ -28,7 +31,7 @@ export default function Form({ addRecord }) {
         abortEarly: false,
       });
 
-      addRecord(data);
+      upinsertRecord(data);
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         err.inner.forEach((error) => {
@@ -45,6 +48,12 @@ export default function Form({ addRecord }) {
       ref={formRef}
       onSubmit={handleSubmit}
     >
+      <Input
+        type="hidden"
+        placeholder="Fulano da Silva"
+        name="id"
+        data-input="field"
+      />
       <p>
         <Input
           type="text"
@@ -90,9 +99,9 @@ export default function Form({ addRecord }) {
       <button type="submit" className="btn btn-add">
         {
           <img
-            src={true ? editUser : add}
-            title={true ? "Editar usuário" : "adicionar usuário"}
-            alt={true ? "Editar usuário" : "adicionar usuário"}
+            src={+formData.id ? editUser : add}
+            title={+formData.id ? "Editar usuário" : "adicionar usuário"}
+            alt={+formData.id ? "Editar usuário" : "adicionar usuário"}
           />
         }
       </button>
