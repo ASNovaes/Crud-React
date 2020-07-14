@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "../../App.css";
 import btnEdit from "../../img/edit.svg";
 import btnDelete from "../../img/delete.svg";

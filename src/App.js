@@ -20,11 +20,10 @@ export default function App() {
   });
 
   const [records, setRecords] = useState([]);
-  // TODO: criar paginação com hooks
-  const [perPage, setPerPage] = useState(5);
+  const [perPage] = useState(5);
   const [pageCurrent, setPageCurrent] = useState(0);
-  const [overflow, setOverflow] = useState("content");
-  const [modeEdit, setModeEdit] = useState(false);
+  const [overflow] = useState("content");
+  const [recordPage, setRecordPage] = useState([]);
 
   useEffect(() => {
     if (!localStorage.getItem("ObjectRecord")) {
@@ -33,7 +32,26 @@ export default function App() {
     }
     const ObjectRecord = JSON.parse(localStorage.getItem("ObjectRecord"));
     setRecords(ObjectRecord);
+
+    let lastPage = Math.ceil(ObjectRecord.length / perPage);
+    if (ObjectRecord.length === 0) { lastPage = 0 }
+    setPageCurrent(lastPage);
+
   }, []);
+
+  useEffect(() => {
+    let end = pageCurrent * perPage;
+    console.log(end)
+    let start = end - perPage;
+    let record = records.slice(start, end);
+    setRecordPage(record);
+  }, [pageCurrent, records]);
+
+  useEffect(() => {
+    let lastPage = Math.ceil(records.length / perPage);
+    if (records.length === 0) { lastPage = 0 }
+    setPageCurrent(lastPage);
+  }, [records]);
 
   const deleteRecord = useCallback((id) => {
     let updateRecords = records.filter((record) => record.id !== id);
@@ -80,20 +98,32 @@ export default function App() {
       email: "",
       tel: "",
     });
+
   }, [records]);
 
   return (
     <div className="container" style={{ overflowY: "hidden" }}>
       <Header />
-      <SearchRecord records={records} recordSought={null} />
+      <SearchRecord
+        data={recordPage}
+        setRecordPage={setRecordPage}
+        pageCurrent={pageCurrent}
+        setPageCurrent={setPageCurrent}
+      />
       <Counter records={records} />
       <Table
-        data={records}
+        data={recordPage}
+        pageCurrent={pageCurrent}
         deleteRecord={deleteRecord}
         editRecord={editRecord}
         overflow={overflow}
       />
-      <Pagination state={null} updatePage={null} />
+      <Pagination
+        records={records}
+        pageCurrent={pageCurrent}
+        setPageCurrent={setPageCurrent}
+        perPage={perPage}
+      />
       <Form formData={formData} upinsertRecord={upinsertRecord} />
       <Trash deleteAllRecords={deleteAllRecords} />
       <ToastContainer />

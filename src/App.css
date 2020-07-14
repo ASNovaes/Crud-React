@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0;
   -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
@@ -42,8 +42,8 @@ img {
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   height: 100vh;
   position: relative;
   width: 100vw;
@@ -63,11 +63,11 @@ img {
   margin: 10px auto;
   margin-top: 30px;
   -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 
 .container-form-search__user {
@@ -77,33 +77,12 @@ img {
   display: flex;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   position: relative;
-}
-
-.container-form-search__user span {
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  background: #5e27cdad;
-  border-radius: 2px;
-  color: #fff;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 0.7em;
-  font-weight: 900;
-  height: auto;
-  padding: 3px;
-  position: absolute;
-  right: 5px;
-  top: 35px;
-  width: auto;
 }
 
 .btn-search {
@@ -123,8 +102,8 @@ img {
 
 .txtNotFound {
   -ms-flex-item-align: center;
-      -ms-grid-row-align: center;
-      align-self: center;
+  -ms-grid-row-align: center;
+  align-self: center;
   background: #b62222fd;
   border-radius: 15px;
   color: #fff;
@@ -143,12 +122,39 @@ img {
   outline: none;
   text-indent: 5px;
   width: 300px;
+  position: relative;
 }
 
-.counters {
+.counter {
+  position: absolute;
+  top: 60px;
+  left: calc(90vw - 30px);
+}
+
+
+.counter span {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background: #5e27cdad;
+  border-radius: 2px;
+  color: #fff;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.7em;
+  font-weight: 900;
+  height: auto;
+  padding: 3px;
+  position: absolute;
+  right: 0px;
+  top: 35px;
+  width: auto;
+}
+
+.counter img {
+  width: 50px;
 }
 
 .content {
@@ -198,8 +204,8 @@ img {
 
 .form-submit {
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   background: #ddd9ce;
   border-radius: 0px 0px 3px 3px;
   border-top: 5px solid #4c4c4c;
@@ -208,8 +214,8 @@ img {
   display: flex;
   height: 10vh;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   margin: 0px auto;
   padding: 20px;
   width: 90vw;
@@ -223,7 +229,7 @@ img {
   width: 25%;
 }
 
-.form-submit p > input {
+.form-submit p>input {
   border: 1px solid #7d57c9;
   border-radius: 0px;
   height: 35px;
@@ -233,7 +239,7 @@ img {
   width: 100%;
 }
 
-.form-submit p > input[type=text] {
+.form-submit p>input[type=text] {
   border-radius: 3px 0px 0px 3px;
 }
 
@@ -243,7 +249,7 @@ img {
   right: 7px;
   top: 50%;
   -webkit-transform: translate(0, -50%);
-          transform: translate(0, -50%);
+  transform: translate(0, -50%);
 }
 
 .btn-add {
@@ -254,8 +260,7 @@ img {
   width: 70px;
 }
 
-.btn-edit,
-.btn-delete {
+.btn-edit, .btn-delete {
   width: 35px;
 }
 
@@ -270,7 +275,7 @@ img {
 
 .btn-trash:hover {
   -webkit-transform: translateY(-3px);
-          transform: translateY(-3px);
+  transform: translateY(-3px);
 }
 
 .pagination {
@@ -278,17 +283,16 @@ img {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
   margin: 5px auto 10px;
   width: 90vw;
 }
 
-.pagination a,
-.pagination span {
+.pagination a, .pagination span {
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   border: 1px solid #ddd9ce;
   color: #fff;
   cursor: pointer;
@@ -296,19 +300,19 @@ img {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   height: 25px;
   text-decoration: none;
   width: 25px;
 }
 
-.pagination a:nth-child(2) {
+.pagination__btn-previous {
   background: #7d57c9;
   border-radius: 2px 0px 0px 2px;
 }
 
-.pagination a:last-child {
+.pagination__btn-next {
   border-radius: 0px 2px 2px 0px;
   background: #7d57c9;
 }
@@ -356,7 +360,7 @@ img {
   position: absolute;
   top: 30%;
   -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
   min-width: 20vw;
   z-index: 900;
 }
@@ -368,16 +372,16 @@ img {
 
 .dialog__nav {
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   background: #4c4c4c;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   height: 25px;
   -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
 }
 
 .btn-close {
@@ -386,19 +390,19 @@ img {
 
 .dialog__content {
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   height: calc(100% - 25px);
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
 }
 
 .dialog__content p {
@@ -425,4 +429,5 @@ img {
   width: 100vw;
   z-index: 1;
 }
+
 /*# sourceMappingURL=main.css.map */
