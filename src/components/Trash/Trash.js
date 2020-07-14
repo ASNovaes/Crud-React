@@ -2,29 +2,22 @@ import React from 'react';
 import '../../App.css'
 import trash from '../../img/trash.svg';
 
-export default class Trash extends React.Component {
-    constructor(props) {
-        super(props);
+export default function Trash ({deleteAllRecords}){
 
-        this.confirmDelete = this.confirmDelete.bind(this);
-    }
-
-    confirmDelete() {
+    function confirmDelete() {
         if (window.confirm('Voce realmente quer Excluir todos os registros?')) {
-            this.props.deleteAllRecords();
+            deleteAllRecords();
         }
     }
 
-    render() {
-        return (
-            <>
-                <div className={'section-validate'}>
-                    <ul className={'txtValidate'} ></ul>
-                    <button className={'btn btn-trash'} onClick={this.confirmDelete}>
-                        <img src={trash} alt="Apagar tudo! " title="Apagar Tudo!" />
-                    </button>
-                </div>
-            </>
-        )
-    }
+    return (
+        <>
+            <div className={'section-validate'}>
+                <ul className={'txtValidate'} ></ul>
+                <button className={'btn btn-trash'} onClick={confirmDelete}>
+                    <img src={trash} alt="Apagar tudo! " title="Apagar Tudo!" />
+                </button>
+            </div>
+        </>
+    )
 }
