@@ -1,81 +1,71 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import search from "../../img/search.svg";
-import user from "../../img/user.svg";
 
-class SearchRecord extends React.Component {
-  constructor(props) {
-    super(props);
+export default function SearchRecord({ setRecordPage, pageCurrent, setPageCurrent }) {
 
-    this.state = {
-      recordSought: "",
-      messageNotFound: false,
-    };
+  const [recordSought, setRecordSought] = useState('');
+  const [messageNotFound, setMessageNotFound] = useState(false);
 
-    this.getValueInput = this.getValueInput.bind(this);
-  }
+  useEffect(() => {
+    let ObjectRecord = JSON.parse(localStorage.getItem("ObjectRecord"));
 
-  getValueInput = (e) => {
-    const { value } = e.target;
+    if (recordSought === '') {
+      setPageCurrent(pageCurrent);
 
-    this.setState({ recordSought: value });
-
-    let search = this.props.records.map((record, i) => {
-      let regex = new RegExp("" + value + "", "g" + "i");
-
-      if (
-        record.name.toString().match(regex) == null &&
-        record.dateofbirth.toString().match(regex) == null &&
-        record.email.toString().match(regex) == null &&
-        record.tel.toString().match(regex) == null
-      ) {
-        return false;
-      } else {
-        return record;
-      }
-    });
-
-    let filterRecords = search.filter((record) => record !== false);
-    this.props.recordSought(filterRecords);
-
-    if (filterRecords.length === 0) {
-      this.setState({ messageNotFound: true });
     } else {
-      this.setState({ messageNotFound: false });
+
+      let search = ObjectRecord.map((record, i) => {
+        let regex = new RegExp('' + recordSought + '', 'g' + 'i');
+
+        if (record.name.toString().match(regex) == null &&
+          record.dateofbirth.toString().match(regex) == null &&
+          record.email.toString().match(regex) == null &&
+          record.tel.toString().match(regex) == null
+        ) {
+          return false;
+
+        } else {
+          return i;
+        }
+      });
+
+      let filterRecords = search.filter(el => el !== false);
+      let records = filterRecords.map((el, i) => ObjectRecord[filterRecords[i]]);
+
+      if (filterRecords.length === 0) {
+        setMessageNotFound(true);
+      } else {
+        setMessageNotFound(false);
+      }
+
+      setRecordPage(records)
     }
-  };
 
-  render() {
-    return (
-      <>
-        <div className={"container-form-search"}>
-          <div className={"form-search"}>
-            <div className={"btn btn-search"} id="btn_search">
-              <img src={search} title="Pesquisar" alt={"pesquisar"} />
-            </div>
+  }, [recordSought]);
 
-            <input
-              type="search"
-              className={"form-search__bar-search"}
-              id="bar_search"
-              onChange={this.getValueInput}
-            />
-
-            {this.state.messageNotFound ? (
-              <p className={"txtNotFound"}>Não Encontrado!</p>
-            ) : (
-              true
-            )}
+  return (
+    <>
+      <div className={"container-form-search"}>
+        <div className={"form-search"}>
+          <div className={"btn btn-search"} id="btn_search">
+            <img src={search} title="Pesquisar" alt={"pesquisar"} />
           </div>
-          <div className="counters">
-            <div className={"container-form-search__user"}>
-              <img src={user} alt={"Countador de Registro"} />
-              <span id="countRegister">{this.props.records.length}</span>
-            </div>
-          </div>
+
+          <input
+            type="search"
+            className={"form-search__bar-search"}
+            id="bar_search"
+            onChange={(e) => setRecordSought(e.target.value)}
+          />
+
+          {messageNotFound &&
+            <p className={"txtNotFound"}>Não Encontrado!</p>
+          }
         </div>
-      </>
-    );
-  }
+      </div>
+    </>
+  );
 }
 
-export default SearchRecord;
+
+
