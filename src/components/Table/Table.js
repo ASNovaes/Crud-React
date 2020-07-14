@@ -4,6 +4,7 @@ import btnEdit from "../../img/edit.svg";
 import btnDelete from "../../img/delete.svg";
 
 export default function Table({ deleteRecord, data, editRecord, overflow }) {
+
   function confirmDelete(id) {
     if (window.confirm("Você realmente quer Excluir este registro?")) {
       deleteRecord(id);
@@ -13,7 +14,7 @@ export default function Table({ deleteRecord, data, editRecord, overflow }) {
   }
 
   return (
-    data.length && (
+    (
       <>
         <section className={overflow}>
           <table className="table">
