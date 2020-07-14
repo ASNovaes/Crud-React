@@ -8,6 +8,7 @@ import Table from "./components/Table/Table.js";
 import Pagination from "./components/Pagination/Pagination.js";
 import Form from "./components/Form/Form.js";
 import Trash from "./components/Trash/Trash.js";
+import Counter from "./components/Counter/Counter.js"
 
 export default function App() {
   const [formData, setForm] = useState({
@@ -33,6 +34,7 @@ export default function App() {
     const ObjectRecord = JSON.parse(localStorage.getItem("ObjectRecord"));
     setRecords(ObjectRecord);
   }, []);
+
 
   function deleteRecord(id) {
     let updateRecords = records.filter((record) => record.id !== id);
@@ -85,6 +87,7 @@ export default function App() {
     <div className="container" style={{ overflowY: "hidden" }}>
       <Header />
       <SearchRecord records={records} recordSought={null} />
+      <Counter records={records} />
       <Table
         data={records}
         deleteRecord={deleteRecord}
@@ -98,3 +101,5 @@ export default function App() {
     </div>
   );
 }
+
+
