@@ -1,13 +1,14 @@
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Header from "./components/Header/Header.js";
 import SearchRecord from "./components/Search/Search.js";
 import Table from "./components/Table/Table.js";
 import Pagination from "./components/Pagination/Pagination.js";
 import Form from "./components/Form/Form.js";
 import Trash from "./components/Trash/Trash.js";
+import Counter from "./components/Counter/Counter.js"
 
 export default function App() {
   const [formData, setForm] = useState({
@@ -34,34 +35,40 @@ export default function App() {
     setRecords(ObjectRecord);
   }, []);
 
-  function deleteRecord(id) {
+  const deleteRecord = useCallback((id) => {
     let updateRecords = records.filter((record) => record.id !== id);
     setRecords(updateRecords);
     localStorage.setItem("ObjectRecord", JSON.stringify(updateRecords));
-  }
+  }, [records]);
 
-  function deleteAllRecords() {
+  const deleteAllRecords = useCallback(() => {
     localStorage.removeItem("ObjectRecord");
     setRecords([]);
-  }
+  }, [records]);
 
-  function editRecord(recordId) {
+  const editRecord = useCallback((recordId) => {
     let ObjectRecord = JSON.parse(localStorage.getItem("ObjectRecord"));
-
     const form = ObjectRecord.filter((record) => recordId === record.id)[0];
 
     setForm(form);
-  }
 
-  function upinsertRecord(data) {
-    const ObjectRecord = JSON.parse(localStorage.getItem("ObjectRecord"));
+  }, [records]);
+
+  const upinsertRecord = useCallback((data) => {
+
     let upinsert = [];
 
     if (!data.id.length) {
-      upinsert = [...ObjectRecord, { ...data, id: new Date().getTime() }];
+      upinsert = [...records, { ...data, id: new Date().getTime() }];
+
     } else {
-      const filter = ObjectRecord.filter((i) => +i.id !== +data.id);
-      upinsert = [...filter, { ...data }];
+      upinsert = [...records];
+
+      records.forEach((record, i) => {
+        if (+record.id === +data.id) {
+          return upinsert.splice(i, 1, data)
+        }
+      });
     }
 
     localStorage.setItem("ObjectRecord", JSON.stringify(upinsert));
@@ -73,12 +80,13 @@ export default function App() {
       email: "",
       tel: "",
     });
-  }
+  }, [records]);
 
   return (
     <div className="container" style={{ overflowY: "hidden" }}>
       <Header />
       <SearchRecord records={records} recordSought={null} />
+      <Counter records={records} />
       <Table
         data={records}
         deleteRecord={deleteRecord}
@@ -92,3 +100,4 @@ export default function App() {
     </div>
   );
 }
+
