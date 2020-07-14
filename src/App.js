@@ -54,14 +54,20 @@ export default function App() {
   }
 
   function upinsertRecord(data) {
-    const ObjectRecord = JSON.parse(localStorage.getItem("ObjectRecord"));
+
     let upinsert = [];
 
     if (!data.id.length) {
-      upinsert = [...ObjectRecord, { ...data, id: new Date().getTime() }];
+      upinsert = [...records, { ...data, id: new Date().getTime() }];
+
     } else {
-      const filter = ObjectRecord.filter((i) => +i.id !== +data.id);
-      upinsert = [...filter, { ...data }];
+      upinsert = [...records];
+
+      records.forEach((record, i) => {
+        if (+record.id === +data.id) {
+          return upinsert.splice(i, 1, data)
+        }
+      });
     }
 
     localStorage.setItem("ObjectRecord", JSON.stringify(upinsert));
