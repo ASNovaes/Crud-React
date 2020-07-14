@@ -1,7 +1,7 @@
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Header from "./components/Header/Header.js";
 import SearchRecord from "./components/Search/Search.js";
 import Table from "./components/Table/Table.js";
@@ -35,27 +35,26 @@ export default function App() {
     setRecords(ObjectRecord);
   }, []);
 
-
-  function deleteRecord(id) {
+  const deleteRecord = useCallback((id) => {
     let updateRecords = records.filter((record) => record.id !== id);
     setRecords(updateRecords);
     localStorage.setItem("ObjectRecord", JSON.stringify(updateRecords));
-  }
+  }, [records]);
 
-  function deleteAllRecords() {
+  const deleteAllRecords = useCallback(() => {
     localStorage.removeItem("ObjectRecord");
     setRecords([]);
-  }
+  }, [records]);
 
-  function editRecord(recordId) {
+  const editRecord = useCallback((recordId) => {
     let ObjectRecord = JSON.parse(localStorage.getItem("ObjectRecord"));
-
     const form = ObjectRecord.filter((record) => recordId === record.id)[0];
 
     setForm(form);
-  }
 
-  function upinsertRecord(data) {
+  }, [records]);
+
+  const upinsertRecord = useCallback((data) => {
 
     let upinsert = [];
 
@@ -81,7 +80,7 @@ export default function App() {
       email: "",
       tel: "",
     });
-  }
+  }, [records]);
 
   return (
     <div className="container" style={{ overflowY: "hidden" }}>
@@ -101,5 +100,4 @@ export default function App() {
     </div>
   );
 }
-
 
