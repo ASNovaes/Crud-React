@@ -1,13 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import search from "../../img/search.svg";
+import { ContextApp } from "../Context/Context.js"
 
-export default function SearchRecord({ setRecordPage, pageCurrent, setPageCurrent }) {
+export default function SearchRecord() {
+
+  const { setRecordPage, pageCurrent, setPageCurrent } = useContext(ContextApp);
 
   const [recordSought, setRecordSought] = useState('');
   const [messageNotFound, setMessageNotFound] = useState(false);
 
   useEffect(() => {
     let ObjectRecord = JSON.parse(localStorage.getItem("ObjectRecord"));
+
+    if (ObjectRecord == null) {
+      return;
+    }
 
     if (recordSought === '') {
       setPageCurrent(pageCurrent);

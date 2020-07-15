@@ -1,8 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useMemo, useCallback } from "react";
+import React, { useMemo, useCallback, useContext } from "react";
 import "../../App.css";
+import { ContextApp } from "../Context/Context.js"
 
-export default function Pagination({ records, perPage, pageCurrent, setPageCurrent }) {
+export default function Pagination() {
+
+  const { records, perPage, pageCurrent, setPageCurrent } = useContext(ContextApp);
 
   const numberPages = useMemo(() => Math.ceil(records.length / perPage), [records]);
 

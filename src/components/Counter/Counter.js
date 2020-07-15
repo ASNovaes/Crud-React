@@ -1,8 +1,10 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useContext } from "react";
 import user from "../../img/user.svg";
+import { ContextApp } from "../Context/Context.js"
 
-export default function Counter({ records }) {
+export default function Counter() {
 
+  const { records } = useContext(ContextApp);
   const recordSize = useMemo(() => records.length, [records]);
 
   return (

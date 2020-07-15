@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import '../../App.css'
 import trash from '../../img/trash.svg';
+import { ContextApp } from "../Context/Context.js";
 
-export default function Trash ({deleteAllRecords}){
+export default function Trash() {
+
+    const { deleteAllRecords } = useContext(ContextApp);
 
     function confirmDelete() {
         if (window.confirm('Voce realmente quer Excluir todos os registros?')) {

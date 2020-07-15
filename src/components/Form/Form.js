@@ -1,12 +1,17 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useContext } from "react";
 import { toast } from "react-toastify";
 import { Form as UForm } from "@unform/web";
 import editUser from "../../img/edit-user.svg";
 import add from "../../img/icon-add.svg";
 import Input from "./Input";
 import * as Yup from "yup";
+import { ContextApp } from "../Context/Context.js";
 
-export default function Form({ upinsertRecord, formData }) {
+
+export default function Form() {
+
+  const { upinsertRecord, formData } = useContext(ContextApp);
+
   const formRef = useRef(null);
 
   useEffect(() => {

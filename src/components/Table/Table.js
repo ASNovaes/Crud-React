@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "../../App.css";
 import btnEdit from "../../img/edit.svg";
 import btnDelete from "../../img/delete.svg";
+import { ContextApp } from "../Context/Context.js"
 
-export default function Table({ deleteRecord, data, editRecord, overflow }) {
+export default function Table() {
+
+  const { deleteRecord, recordPage, editRecord } = useContext(ContextApp);
 
   function confirmDelete(id) {
     if (window.confirm("Você realmente quer Excluir este registro?")) {
@@ -16,7 +19,7 @@ export default function Table({ deleteRecord, data, editRecord, overflow }) {
   return (
     (
       <>
-        <section className={overflow}>
+        <section className="content">
           <table className="table">
             <thead>
               <tr>
@@ -29,7 +32,7 @@ export default function Table({ deleteRecord, data, editRecord, overflow }) {
               </tr>
             </thead>
             <tbody id="tbody">
-              {data.map((record, i) => {
+              {recordPage.map((record, i) => {
                 return (
                   <tr key={i}>
                     <td></td>
