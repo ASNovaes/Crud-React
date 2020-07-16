@@ -8,14 +8,16 @@ import Table from "./components/Table/Table.js";
 import Pagination from "./components/Pagination/Pagination.js";
 import Form from "./components/Form/Form.js";
 import Trash from "./components/Trash/Trash.js";
-import Counter from "./components/Counter/Counter.js"
-import ContextProvider from "./components/Context/Context.js"
+import Counter from "./components/Counter/Counter.js";
+import ContextProvider from "./components/Context/Context.js";
+import GlobalStyle from "./GlobalStyle/styles.js";
 
 export default function App() {
 
   return (
     <ContextProvider>
-      <div className="container" style={{ overflowY: "hidden" }}>
+      <GlobalStyle />
+      <div className="container">
         <Header />
         <SearchRecord />
         <Counter />

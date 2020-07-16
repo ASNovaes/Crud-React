@@ -1,7 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useMemo, useCallback, useContext } from "react";
 import "../../App.css";
-import { ContextApp } from "../Context/Context.js"
+import { ContextApp } from "../Context/Context.js";
+import { StyledPagination, StyledBtnPrevious, StyledBtnNext } from "./styles";
 
 export default function Pagination() {
 
@@ -32,22 +33,21 @@ export default function Pagination() {
 
   return (
     <>
-      <div className={"pagination"}>
+      <StyledPagination>
         {pageCurrent >= 1 &&
-          <span className={"countPage"}>
+          <span>
             Página {pageCurrent} de {numberPages}
           </span>
         }
-        <a
+        <StyledBtnPrevious
           href="#"
           title="Voltar"
-          className={"pagination__btn-previous"}
           target="_self"
           rel="noopener noreferrer"
           onClick={() => controllerPagination('previous')}
         >
           &laquo;
-          </a>
+        </StyledBtnPrevious>
         {pageCurrent >= 1 &&
           new Array(numberPages).fill("").map((pager, i) => {
             return pageCurrent === i + 1 ? (
@@ -72,19 +72,17 @@ export default function Pagination() {
                   {i + 1}
                 </a>
               );
-
           })}
-        <a
+        <StyledBtnNext
           href="#"
           title="Próximo"
-          className={"pagination__btn-next"}
           target="_self"
           rel="noopener noreferrer"
           onClick={() => controllerPagination('next')}
         >
           &raquo;
-          </a>
-      </div>
+          </StyledBtnNext>
+      </StyledPagination>
     </>
   );
 }

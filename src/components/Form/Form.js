@@ -6,6 +6,7 @@ import add from "../../img/icon-add.svg";
 import Input from "./Input";
 import * as Yup from "yup";
 import { ContextApp } from "../Context/Context.js";
+import StyledForm from "./styles.js";
 
 export default function Form() {
 
@@ -46,69 +47,71 @@ export default function Form() {
   }
 
   return (
-    <UForm
-      className="form-submit"
-      id="form"
-      ref={formRef}
-      onSubmit={handleSubmit}
-    >
-      <Input
-        type="hidden"
-        placeholder="Fulano da Silva"
-        name="id"
-        data-input="field"
-      />
-      <p>
+    <StyledForm>
+      <UForm
+        className="form-submit"
+        id="form"
+        ref={formRef}
+        onSubmit={handleSubmit}
+      >
         <Input
-          type="text"
+          type="hidden"
           placeholder="Fulano da Silva"
-          name="name"
+          name="id"
           data-input="field"
         />
-        <i className="fa fa-user-o" style={{ fontSize: "20px" }}></i>
-      </p>
-
-      <p>
-        <Input
-          type="date"
-          placeholder="ano de nascimento"
-          name="dateofbirth"
-          min="1900-10-10"
-          data-input="field"
-          required
-        />
-      </p>
-
-      <p>
-        <Input
-          type="email"
-          placeholder="email@exemplo.com"
-          name="email"
-          data-input="field"
-        />
-        <i className="fa fa-envelope-o" style={{ fontSize: "20px" }}></i>
-      </p>
-
-      <p>
-        <Input
-          type="tel"
-          placeholder="(xx)xxxxx-xxxx"
-          name="tel"
-          data-input="field"
-          style={{ margin: "0px" }}
-        />
-        <i className={"fa fa-mobile-phone"} style={{ fontSize: "24px" }}></i>
-      </p>
-
-      <button type="submit" className="btn btn-add">
-        {
-          <img
-            src={+formData.id ? editUser : add}
-            title={+formData.id ? "Editar usuário" : "adicionar usuário"}
-            alt={+formData.id ? "Editar usuário" : "adicionar usuário"}
+        <p>
+          <Input
+            type="text"
+            placeholder="Fulano da Silva"
+            name="name"
+            data-input="field"
           />
-        }
-      </button>
-    </UForm>
+          <i className="fa fa-user-o" style={{ fontSize: "20px" }}></i>
+        </p>
+
+        <p>
+          <Input
+            type="date"
+            placeholder="ano de nascimento"
+            name="dateofbirth"
+            min="1900-10-10"
+            data-input="field"
+            required
+          />
+        </p>
+
+        <p>
+          <Input
+            type="email"
+            placeholder="email@exemplo.com"
+            name="email"
+            data-input="field"
+          />
+          <i className="fa fa-envelope-o" style={{ fontSize: "20px" }}></i>
+        </p>
+
+        <p>
+          <Input
+            type="tel"
+            placeholder="(xx)xxxxx-xxxx"
+            name="tel"
+            data-input="field"
+            style={{ margin: "0px" }}
+          />
+          <i className={"fa fa-mobile-phone"} style={{ fontSize: "24px" }}></i>
+        </p>
+
+        <button type="submit" className="btn btn-add">
+          {
+            <img
+              src={+formData.id ? editUser : add}
+              title={+formData.id ? "Editar usuário" : "adicionar usuário"}
+              alt={+formData.id ? "Editar usuário" : "adicionar usuário"}
+            />
+          }
+        </button>
+      </UForm>
+    </StyledForm>
   );
 }

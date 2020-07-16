@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import search from "../../img/search.svg";
 import { ContextApp } from "../Context/Context.js"
+import StyledSearch from "./styles.js"
 
 export default function SearchRecord() {
 
@@ -52,15 +53,14 @@ export default function SearchRecord() {
 
   return (
     <>
-      <div className={"container-form-search"}>
-        <div className={"form-search"}>
-          <div className={"btn btn-search"} id="btn_search">
+      <StyledSearch>
+        <div>
+          <div className={"btn"} id="btn_search">
             <img src={search} title="Pesquisar" alt={"pesquisar"} />
           </div>
 
           <input
             type="search"
-            className={"form-search__bar-search"}
             id="bar_search"
             onChange={(e) => setRecordSought(e.target.value)}
           />
@@ -69,7 +69,7 @@ export default function SearchRecord() {
             <p className={"txtNotFound"}>Não Encontrado!</p>
           }
         </div>
-      </div>
+      </StyledSearch>
     </>
   );
 }
