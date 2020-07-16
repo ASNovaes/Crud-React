@@ -7,7 +7,6 @@ import Input from "./Input";
 import * as Yup from "yup";
 import { ContextApp } from "../Context/Context.js";
 
-
 export default function Form() {
 
   const { upinsertRecord, formData } = useContext(ContextApp);
