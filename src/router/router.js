@@ -7,7 +7,18 @@ export default function Routes() {
         <BrowserRouter>
             <Switch>
                 <Route exact path="/" component={App} />
+                <Route path="*" component={PageNotFound} />
             </Switch>
         </BrowserRouter>
+    );
+}
+
+const PageNotFound = () => {
+    return (
+        <>
+            <h1 style={{ textAlign: "center" }}>
+                Página Não Encontrada!
+            </h1>
+        </>
     );
 }

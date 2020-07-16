@@ -2,7 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import "../../App.css";
 import btnEdit from "../../img/edit.svg";
 import btnDelete from "../../img/delete.svg";
-import { ContextApp } from "../Context/Context.js"
+import { ContextApp } from "../Context/Context.js";
+import StyledTable from "./styles";
 
 export default function Table() {
 
@@ -19,8 +20,8 @@ export default function Table() {
   return (
     (
       <>
-        <section className="content">
-          <table className="table">
+        <StyledTable>
+          <table>
             <thead>
               <tr>
                 <th></th>
@@ -67,7 +68,7 @@ export default function Table() {
               })}
             </tbody>
           </table>
-        </section>
+        </StyledTable>
       </>
     )
   );

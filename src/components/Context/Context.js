@@ -74,7 +74,7 @@ export default function ContextProvider({ children }) {
 
             records.forEach((record, i) => {
                 if (+record.id === +data.id) {
-                    return upinsert.splice(i, 1, data)
+                    return upinsert.splice(i, 1, data);
                 }
             });
         }

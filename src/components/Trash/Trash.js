@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import '../../App.css'
 import trash from '../../img/trash.svg';
 import { ContextApp } from "../Context/Context.js";
+import StyleTrash from "./styles.js"
 
 export default function Trash() {
 
@@ -15,12 +16,11 @@ export default function Trash() {
 
     return (
         <>
-            <div className={'section-validate'}>
-                <ul className={'txtValidate'} ></ul>
-                <button className={'btn btn-trash'} onClick={confirmDelete}>
-                    <img src={trash} alt="Apagar tudo! " title="Apagar Tudo!" />
+            <StyleTrash>
+                <button className={'btn'} onClick={confirmDelete}>
+                    <img src={trash} alt="Apagar tudo!" title="Apagar Tudo!" />
                 </button>
-            </div>
+            </StyleTrash>
         </>
-    )
+    );
 }

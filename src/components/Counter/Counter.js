@@ -1,6 +1,7 @@
 import React, { useMemo, useContext } from "react";
 import user from "../../img/user.svg";
-import { ContextApp } from "../Context/Context.js"
+import { ContextApp } from "../Context/Context.js";
+import StyledCounter from "./styles.js";
 
 export default function Counter() {
 
@@ -8,9 +9,9 @@ export default function Counter() {
   const recordSize = useMemo(() => records.length, [records]);
 
   return (
-    <div className="counter">
+    <StyledCounter>
       <img src={user} alt={"Contador de Registro"} />
       <span id="countRegister">{recordSize}</span>
-    </div>
-  )
+    </StyledCounter>
+  );
 }

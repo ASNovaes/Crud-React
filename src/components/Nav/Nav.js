@@ -1,13 +1,14 @@
 import React from 'react';
 import '../../App.css'
+import StyledNavPage from "./styles.js";
 
 export default function Nav() {
 
   return (
     <>
-      <nav className={'nav-page'}></nav>
+      <StyledNavPage className={'nav-page'}></StyledNavPage>
     </>
-  )
+  );
 }
 
 
